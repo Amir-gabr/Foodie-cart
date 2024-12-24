@@ -6,18 +6,17 @@
 //
 
 import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
-import { request, gql } from "graphql-request"; 
+import { request, gql } from "graphql-request";
 
 // Async thunk to fetch categories data
 export const getResDetailsData = createAsyncThunk(
   "resDetails/getResDetailsData",
-  async (category) => {
+  async (businessSlug) => {
     const baseUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL;
-
     // Define the GraphQL query
     const query = gql`
       query Restaurant {
-        restaurant(where: { slug: "${category}" }) {
+        restaurant(where: { slug: "${businessSlug}" }) {
           id
           name
           aboutUs
@@ -80,7 +79,7 @@ const resDetailsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getResDetailsData.fulfilled, (state, action) => {
-        state.restaurants = action.payload?.restaurants;
+        state.resDetails = action.payload?.restaurant;
         state.isLoading = false;
         state.isError = null;
       })

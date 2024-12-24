@@ -10,7 +10,7 @@ export const getRestaurantsData = createAsyncThunk(
   "restaurants/getRestaurantsData",
   async (category) => {
     const baseUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL;
-
+    
     // Define the GraphQL query
     const query =
       gql`

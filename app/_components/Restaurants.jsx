@@ -4,12 +4,11 @@
 //
 import Link from "next/link";
 import Image from "next/image";
+import LoadingCards from "./LoadingCards";
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRestaurantsData } from "../_utils/redux/restaurantsSlice";
-import { getResDetailsData } from "../_utils/redux/resDetailsSlice";
-import LoadingCards from "./LoadingCards";
 
 
 
@@ -38,9 +37,7 @@ export default function Restaurants() {
             <div className="grid grid-cols-1 gap-8 py-10 mx-auto md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 lg:py-14">
             {restaurants &&
                 restaurants?.map((restaurant) => (
-                <Link href={`/details`} key={restaurant?.id} onClick={()=>{
-                    dispatch(getResDetailsData(restaurant?.slug));
-                }}>
+                <Link href={`/restaurant/${restaurant?.slug}`} key={restaurant?.id}>
                     <div className="group shadow-lg w-full p-3 border rounded-lg hover:bg-red-100 hover:border-primary hover:text-primary hover:duration-300 cursor-pointer">
                         <div className="w-full h-44">
                             <Image

@@ -6,7 +6,7 @@
 import React from 'react'
 import Image from "next/image";
 import { Search } from 'lucide-react';
-import { Button } from '../../components/ui/button';
+import { Button } from '../../_components/ui/button';
 import { SignInButton, SignUpButton,UserButton ,useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 
