@@ -1,25 +1,24 @@
 //
 //
-"use client"
+"use client";
 //
-
-import React from 'react'
+//
+import React from "react";
 import Image from "next/image";
-import { Search } from 'lucide-react';
-import { Button } from '../../_components/ui/button';
-import { SignInButton, SignUpButton,UserButton ,useUser } from '@clerk/nextjs';
-import Link from 'next/link';
-
+import { Search } from "lucide-react";
+import { Button } from "../../src/components/ui/button";
+import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function Header() {
   const { isSignedIn } = useUser();
-    const userButtonAppearance = {
-      elements: {
-        userButtonAvatarBox: "w-12 h-12", 
-        userButtonPopoverCard: "bg-red-100", 
-        userButtonPopoverActionButton: "text-primary",
-      },
-    };
+  const userButtonAppearance = {
+    elements: {
+      userButtonAvatarBox: "w-12 h-12",
+      userButtonPopoverCard: "bg-red-100",
+      userButtonPopoverActionButton: "text-primary",
+    },
+  };
   return (
     <header className="bg-white border-b py-2">
       <div className="container">
@@ -51,9 +50,12 @@ export default function Header() {
             </form>
           </div>
           <div className="flex items-center gap-4">
-            {isSignedIn ?
-              <UserButton afterSignOutUrl="/" appearance={userButtonAppearance} />
-            :
+            {isSignedIn ? (
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={userButtonAppearance}
+              />
+            ) : (
               <div className="flex items-center gap-4">
                 <SignUpButton>
                   <Button
@@ -63,13 +65,13 @@ export default function Header() {
                     Sign Up
                   </Button>
                 </SignUpButton>
-                                <SignInButton mode='modal'>
+                <SignInButton mode="modal">
                   <Button className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-white shadow">
                     Sign In
                   </Button>
                 </SignInButton>
               </div>
-            }
+            )}
             <div className="block md:hidden">
               <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
                 <svg
@@ -94,4 +96,3 @@ export default function Header() {
     </header>
   );
 }
-

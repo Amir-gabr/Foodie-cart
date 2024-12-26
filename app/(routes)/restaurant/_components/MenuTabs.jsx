@@ -1,30 +1,18 @@
 //
 //
-"use client"
-//
-import MenuSection from "./MenuSection";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getResDetailsData } from "../../../_utils/redux/resDetailsSlice";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../../../src/components/ui/tabs";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "../../../../src/components/ui/tabs";
 
+export default function MenuTabs({resDetails}) {
 
-
-
-
-export default function ResTabs() {
-  const dispatch = useDispatch();
-  const { resDetails } = useSelector((state) => state?.resDetails);
-  // console.log(resDetails.aboutUs);
-  useEffect(() => {
-    dispatch(getResDetailsData());
-  }, [dispatch]);
-
+console.log(resDetails);
   return (
     <Tabs className="flex flex-col" defaultValue="tab1">
-      <TabsList
-        className="flex items-center justify-between rounded-md bg-gray-200 p-2"
-      >
+      <TabsList className="flex items-center justify-between rounded-md bg-gray-200 p-2">
         <TabsTrigger
           className="flex h-[45px] w-[200px] flex-1 cursor-pointer items-center justify-center rounded-md data-[state=active]:bg-white px-5 text-[15px] "
           value="tab1"
@@ -45,11 +33,10 @@ export default function ResTabs() {
         </TabsTrigger>
       </TabsList>
       <TabsContent className="grow rounded-b-md bg-white py-5" value="tab1">
-        <MenuSection resDetails={resDetails}/>
       </TabsContent>
       <TabsContent className="grow rounded-b-md bg-white p-5" value="tab2">
         <p className="mb-5 text-[15px] leading-normal text-mauve11">
-          {resDetails?.aboutUs}
+  
         </p>
       </TabsContent>
       <TabsContent className="grow rounded-b-md bg-white p-5" value="tab3">

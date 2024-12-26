@@ -5,12 +5,11 @@
 
 import Image from "next/image";
 import React, { useEffect } from "react";
+import { Clock, MapPinIcon } from "lucide-react";
+import ResTabs from "../_components/ResTabs";
 import { usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { getResDetailsData } from "./../../../_utils/redux/resDetailsSlice";
-import { MapPinIcon } from "lucide-react";
-import ResTabs from '../_components/ResTabs';
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 export default function ResDetails() {
   const param = usePathname();
@@ -46,26 +45,20 @@ export default function ResDetails() {
           </svg>
           <p className="text-gray-400 mt-2">4.5 (35k)</p>
         </div>
-              <p className="text-gray-500"> 
-                  <MapPinIcon className="inline mr-2"/>
-            {resDetails?.address}
-            </p>
-          </div>
-          <div className="">
-              <div>
-                  <ResTabs/>
-                  {/* <Tabs defaultValue="account" className="w-[400px]">
-                    <TabsList>
-                      <TabsTrigger value="account">Account</TabsTrigger>
-                      <TabsTrigger value="password">Password</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="account">
-                      Make changes to your account here.
-                    </TabsContent>
-                    <TabsContent value="password">Change your password here.</TabsContent>
-                  </Tabs> */}
-                </div>
-          </div>
+        <p className="text-gray-500">
+          <Clock className="inline mr-2" />
+          {resDetails?.workingHours}
+        </p>
+        <p className="text-gray-500">
+          <MapPinIcon className="inline mr-2" />
+          {resDetails?.address}
+        </p>
+      </div>
+      <div className="">
+        <div>
+          <ResTabs />
+        </div>
+      </div>
     </section>
   );
 }
