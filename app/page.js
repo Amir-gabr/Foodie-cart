@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <main className="relative">
       {params.size === 0 ? (
-        <section className="fixed inset-0 z-[1000] bg-gradient-to-b from-primary via-white to-primary flex flex-col items-center justify-center">
+        <section className="fixed inset-0 z-[1000] bg-gradient-to-b from-primary via-white to-primary bg-opacity-100 flex flex-col items-center justify-center">
           <h4 className="font-bold text-4xl text-red-400">Welcome To</h4>
           <h2 className="my-5 font-bold text-5xl text-primary">Foodie Cart</h2>
           <p className="font-bold text-gray-500">

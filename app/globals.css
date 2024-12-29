@@ -22,10 +22,7 @@
 html {
   scroll-behavior: smooth;
 }
-body {
-  /* color: rgb(var(--foreground-rgb)); */
-  color: #dd1a00d3;
-}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

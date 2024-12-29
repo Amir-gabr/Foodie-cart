@@ -5,7 +5,7 @@
 //
 import React from "react";
 import Image from "next/image";
-import { Search } from "lucide-react";
+import { Search, ShoppingBagIcon, ShoppingCart } from "lucide-react";
 import { Button } from "../../src/components/ui/button";
 import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
@@ -34,7 +34,7 @@ export default function Header() {
               />
             </Link>
           </div>
-          <div className="flex-grow hidden md:block">
+          <div className="w-[40vw] hidden md:block">
             <form className="w-full">
               <div className="border border-primary ps-4 sm:flex sm:items-center sm:gap-4 rounded-xl">
                 <input
@@ -51,10 +51,16 @@ export default function Header() {
           </div>
           <div className="flex items-center gap-4">
             {isSignedIn ? (
-              <UserButton
-                afterSignOutUrl="/"
-                appearance={userButtonAppearance}
-              />
+              <div className="flex items-center gap-10">
+                <div className="flex items-center gap-2">
+                  <ShoppingCart />
+                  <label htmlFor="" className="bg-slate-200 rounded-full py-1 px-2">0</label>
+                </div>
+                <UserButton
+                  afterSignOutUrl="/"
+                  appearance={userButtonAppearance}
+                />
+              </div>
             ) : (
               <div className="flex items-center gap-4">
                 <SignUpButton>

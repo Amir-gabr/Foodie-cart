@@ -5,17 +5,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import Slider from "react-slick";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import {ArrowRightCircle,ArrowLeftCircle } from "lucide-react";
-import { getCategoriesData } from "../_utils/redux/categoriesSlice";
-
-
+import { ArrowRightCircle, ArrowLeftCircle } from "lucide-react";
+import { getCategoriesData } from "../redux/categoriesSlice";
 
 export default function CategorySlider() {
   const params = useSearchParams();
@@ -30,7 +28,7 @@ export default function CategorySlider() {
   useEffect(() => {
     dispatch(getCategoriesData());
     setSelectedCategory(params.get("category"));
-    console.log(params.get("category"));
+    // console.log(params.get("category"));
   }, [dispatch, params]);
   //
   //those are functions for react slick
@@ -147,7 +145,7 @@ export default function CategorySlider() {
         <Slider {...settings} className="ps-6 lg:pe-4">
           {data &&
             data?.map((category) => (
-              <Link href={`?category=` + category?.slug } key={category?.id}>
+              <Link href={`?category=` + category?.slug} key={category?.id}>
                 <div className="pe-6">
                   <div
                     className={`${
@@ -157,13 +155,13 @@ export default function CategorySlider() {
                     } flex flex-col items-center justify-between gap-3 p-3 min-w-28 border rounded-lg group hover:border-primary hover:bg-red-100 hover:text-primary hover:duration-300 cursor-pointer`}
                   >
                     <div className="w-12 h-12">
-                    <Image
-                      className="group-hover:scale-125 duration-300 mx-auto"
-                      src={category?.icon?.url}
-                      width={category?.icon?.width}
-                      height={category?.icon?.height}
-                      alt="foodie cart logo"
-                    />
+                      <Image
+                        className="group-hover:scale-125 duration-300 mx-auto"
+                        src={category?.icon?.url}
+                        width={category?.icon?.width}
+                        height={category?.icon?.height}
+                        alt="foodie cart logo"
+                      />
                     </div>
                     <h4
                       className={`${

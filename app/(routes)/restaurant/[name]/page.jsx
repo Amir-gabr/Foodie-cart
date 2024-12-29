@@ -9,7 +9,7 @@ import { Clock, MapPinIcon } from "lucide-react";
 import ResTabs from "../_components/ResTabs";
 import { usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { getResDetailsData } from "./../../../_utils/redux/resDetailsSlice";
+import { getResDetailsData } from "../../../redux/resDetailsSlice";
 
 export default function ResDetails() {
   const param = usePathname();
@@ -18,7 +18,7 @@ export default function ResDetails() {
   //
   const { resDetails, isLoading } = useSelector((state) => state?.resDetails);
 
-  console.log(resDetails);
+  // console.log(resDetails);
   //
   useEffect(() => {
     dispatch(getResDetailsData(param.split("/")[2]));
@@ -32,7 +32,7 @@ export default function ResDetails() {
         width={resDetails?.banner?.width}
         height={resDetails?.banner?.height}
       />
-      <div className="pt-3">
+      <div className="flex flex-col gap-2 pt-3">
         <h2 className="text-3xl font-bold text-primary">{resDetails?.name}</h2>
         <div className="flex items-center gap-2">
           <svg
@@ -54,10 +54,8 @@ export default function ResDetails() {
           {resDetails?.address}
         </p>
       </div>
-      <div className="">
-        <div>
-          <ResTabs />
-        </div>
+      <div className="mt-10">
+        <ResTabs />
       </div>
     </section>
   );
