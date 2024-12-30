@@ -5,7 +5,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { request, gql } from "graphql-request";
 
 // Async thunk to fetch categories data
-export const addToCart = createAsyncThunk("cart/AddToCart", async (data) => {
+export const getAddToCart = createAsyncThunk("cart/getAddToCart", async (data) => {
   const baseUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL;
 
   // Define the GraphQL query
@@ -14,9 +14,9 @@ export const addToCart = createAsyncThunk("cart/AddToCart", async (data) => {
       createUserCart(
         data: {
           email: "${data?.email}",
-          price: "${data?.price}",
+          price: ${data?.price},
           productDescription: "${data?.description}",
-          productImage: "${data?.url}",
+          productImage: "${data?.image}",
           productName: "${data?.name}",
         }
       ) {
@@ -50,17 +50,18 @@ const initialValues = {
 const cartSlice = createSlice({
   name: "cart",
   initialState: initialValues,
-  reducers: {},
+  reducers: {},  
   extraReducers: (builder) => {
     builder
-      .addCase(AddToCart.pending, (state) => {
+      .addCase(getAddToCart.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.cart = action.payload;
+        console.log(state.cart);
+      })
+      .addCase(getAddToCart.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(AddToCart.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.cart = action.payload.cart; // The categories come directly from the payload
-      })
-      .addCase(AddToCart.rejected, (state, action) => {
+      .addCase(getAddToCart.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });

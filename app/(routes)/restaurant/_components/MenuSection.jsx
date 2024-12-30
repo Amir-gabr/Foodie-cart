@@ -6,12 +6,13 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { SquarePlus } from "lucide-react";
-import { useDispatch } from 'react-redux';
-import { addToCart } from './../../../redux/addToCartSlice';
+import { useDispatch } from "react-redux";
+import { getAddToCart } from "./../../../redux/addToCartSlice";
+import { useUser } from "@clerk/nextjs";
 
 export default function MenuSection({ resDetails }) {
   const dispatch = useDispatch();
-
+  const {user}=useUser()
   const [result, setResult] = useState([]);
 
   // Set the default value of result to the first category's menu items
@@ -20,9 +21,27 @@ export default function MenuSection({ resDetails }) {
       const firstCategory = resDetails?.menu[0]?.category;
       menuItemsFilter(firstCategory); // Initialize with the first category
     }
-    dispatch(addToCart());
-  }, [resDetails,dispatch]);
+  }, [resDetails]);
 
+  const handleAddToCart=(item)=> {
+  
+
+  const productImage = item?.image?.url || '';
+  const productName = item?.name || '';
+  const productDescription = item?.description || '';
+  const price = item?.price || 0;
+
+
+  dispatch(getAddToCart({
+    name: productName,
+    description: productDescription,
+    price: price, 
+    image: productImage,
+  }));
+      
+    // console.log(data);
+    
+  }
   // Filter the menu items based on the category
   function menuItemsFilter(category) {
     const filteredResult = resDetails?.menu?.find(
@@ -50,7 +69,10 @@ export default function MenuSection({ resDetails }) {
         <h4 className="text-3xl"></h4>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {result?.menuItem?.map((item) => (
-            <div key={item?.id} className="flex border hover:border-primary rounded-xl gap-2 p-2">
+            <div
+              key={item?.id}
+              className="flex border hover:border-primary rounded-xl gap-2 p-2"
+            >
               <Image
                 src={item?.image?.url}
                 alt={item?.name}
@@ -61,8 +83,13 @@ export default function MenuSection({ resDetails }) {
               <div className="flex flex-col gap-1">
                 <p className="font-bold text-xl text-primary">{item?.name}</p>
                 <p className="font-semibold ">{item?.price} SIR</p>
-                <p className="line-clamp-2 text-sm text-thirdly">{item?.description}</p>
-                <SquarePlus className="cursor-pointer hover:scale-110" onClick={() =>addToCart(item) } />
+                <p className="line-clamp-2 text-sm text-thirdly">
+                  {item?.description}
+                </p>
+                <SquarePlus
+                  className="cursor-pointer hover:scale-110"
+                  onClick={() => handleAddToCart(item)}
+                />
               </div>
             </div>
           ))}
