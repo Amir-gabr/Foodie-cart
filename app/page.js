@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Restaurants from "./_components/Restaurants";
 import CategorySlider from "./_components/CategorySlider";
+import Cart from './cart/page';
 
 export default function Home() {
   const params = useSearchParams();
@@ -30,6 +31,7 @@ export default function Home() {
         ""
       )}
       <section className="container min-h-screen py-20">
+        <Cart/>
         <CategorySlider />
         <Restaurants />
       </section>

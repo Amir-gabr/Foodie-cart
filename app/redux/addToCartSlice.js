@@ -5,7 +5,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { request, gql } from "graphql-request";
 
 // Async thunk to fetch categories data
-export const getAddToCart = createAsyncThunk("cart/getAddToCart", async (data) => {
+export const addToCart = createAsyncThunk("cart/getAddToCart", async (data) => {
   const baseUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL;
 
   // Define the GraphQL query
@@ -53,15 +53,15 @@ const cartSlice = createSlice({
   reducers: {},  
   extraReducers: (builder) => {
     builder
-      .addCase(getAddToCart.fulfilled, (state, action) => {
+      .addCase(addToCart.fulfilled, (state, action) => {
         state.isLoading = false;
         state.cart = action.payload;
         console.log(state.cart);
       })
-      .addCase(getAddToCart.pending, (state) => {
+      .addCase(addToCart.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAddToCart.rejected, (state, action) => {
+      .addCase(addToCart.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });

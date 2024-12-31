@@ -3,15 +3,26 @@
 "use client";
 //
 //
-import React from "react";
+import Link from "next/link";
 import Image from "next/image";
-import { Search, ShoppingBagIcon, ShoppingCart } from "lucide-react";
+import React, { useEffect } from "react";
+import { addToCart } from "../redux/addToCartSlice";
+import { Search, ShoppingCart } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../src/components/ui/button";
 import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
-import Link from "next/link";
-
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 export default function Header() {
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state?.cart?.cart);
+  const itemsCount = cart?.publishManyUserCarts?.count
+  console.log(itemsCount);
+  
   const { isSignedIn } = useUser();
+  
+  useEffect(() => {
+    dispatch(addToCart());
+  },[dispatch])
   const userButtonAppearance = {
     elements: {
       userButtonAvatarBox: "w-12 h-12",
@@ -19,6 +30,7 @@ export default function Header() {
       userButtonPopoverActionButton: "text-primary",
     },
   };
+
   return (
     <header className="bg-white border-b py-2">
       <div className="container">
@@ -52,10 +64,15 @@ export default function Header() {
           <div className="flex items-center gap-4">
             {isSignedIn ? (
               <div className="flex items-center gap-10">
-                <div className="flex items-center gap-2">
-                  <ShoppingCart />
-                  <label htmlFor="" className="bg-slate-200 rounded-full py-1 px-2">0</label>
-                </div>
+                <Sheet>
+                  
+                <SheetTrigger>
+                  <div className="flex items-center gap-2">
+                    <ShoppingCart />
+                    <label htmlFor="" className="bg-slate-200 rounded-full py-1 px-2">{itemsCount}</label>
+                  </div>
+                </SheetTrigger>
+                  </Sheet>
                 <UserButton
                   afterSignOutUrl="/"
                   appearance={userButtonAppearance}

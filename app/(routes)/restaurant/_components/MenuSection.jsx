@@ -2,17 +2,18 @@
 //
 "use client";
 //
-import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { toast } from "sonner"
+import { useUser } from "@clerk/nextjs";
 import { SquarePlus } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { getAddToCart } from "./../../../redux/addToCartSlice";
-import { useUser } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import React, { useState, useEffect } from "react";
+import { addToCart } from "./../../../redux/addToCartSlice";
+import Image from "next/image";
 
 export default function MenuSection({ resDetails }) {
-  const dispatch = useDispatch();
   const {user}=useUser()
+  const dispatch = useDispatch();
   const [result, setResult] = useState([]);
 
   // Set the default value of result to the first category's menu items
@@ -24,30 +25,31 @@ export default function MenuSection({ resDetails }) {
   }, [resDetails]);
 
   const handleAddToCart=(item)=> {
-  
+    const email = user?.primaryEmailAddress?.emailAddress || '';
+    const productImage = item?.image?.url || '';
+    const productName = item?.name || '';
+    const productDescription = item?.description || '';
+    const price = item?.price || 0;
+    dispatch(
+      addToCart({
+        email: email,
+        name: productName,
+        description: productDescription,
+        price: price,
+        image: productImage,
+      })
+    );
+  }
 
-  const productImage = item?.image?.url || '';
-  const productName = item?.name || '';
-  const productDescription = item?.description || '';
-  const price = item?.price || 0;
-
-
-  dispatch(getAddToCart({
-    name: productName,
-    description: productDescription,
-    price: price, 
-    image: productImage,
-  }));
-      
-    // console.log(data);
-    
+  const handleToast = (itemName) => {
+    toast.success(itemName);
   }
   // Filter the menu items based on the category
   function menuItemsFilter(category) {
     const filteredResult = resDetails?.menu?.find(
       (item) => item?.category === category
     );
-    setResult(filteredResult || []); // Default to empty array if no result found
+    setResult(filteredResult || []);
   }
 
   return (
@@ -88,7 +90,10 @@ export default function MenuSection({ resDetails }) {
                 </p>
                 <SquarePlus
                   className="cursor-pointer hover:scale-110"
-                  onClick={() => handleAddToCart(item)}
+                  onClick={() => {
+                    handleAddToCart(item)
+                    handleToast(item?.name);
+                  }}
                 />
               </div>
             </div>

@@ -5,6 +5,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/sonner";
 import ClientProvider from './_components/ClientProvider';
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,12 +23,10 @@ export default function RootLayout({ children }) {
           <link rel="icon" href="/favicon.png" />
         </head>
         <body className={inter.className}>
-          <ClientProvider>
-            {children}
-          </ClientProvider>
+          <ClientProvider>{children}</ClientProvider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
-
   );
 }
