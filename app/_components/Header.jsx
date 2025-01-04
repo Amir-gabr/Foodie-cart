@@ -7,7 +7,6 @@ import Cart from './Cart';
 import Link from "next/link";
 import Image from "next/image";
 import React, { useEffect } from "react";
-import { addToCart } from "../redux/addToCartSlice";
 import { Search, ShoppingCart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../src/components/ui/button";
@@ -17,15 +16,16 @@ import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 export default function Header() {
   const dispatch = useDispatch();
   const { isSignedIn } = useUser();
+
   //----------------//
   const cart = useSelector((state) => state);
+  const cartCount = useSelector((state) => state?.cart?.cartData?.userCarts);
+  
   //---//
-  const  itemsCount= cart?.userCart?.cart?.publishManyUserCarts?.count
-  console.log(itemsCount);
+  const itemCount =  cartCount?.length;
   //----------------//
   useEffect(() => {
     dispatch(getUserCartData());
-    dispatch(addToCart());
   }, [dispatch])
   //----------------//
   const userButtonAppearance = {
@@ -59,7 +59,6 @@ export default function Header() {
                   placeholder="Type to search"
                   className="w-full border-none focus:outline-none focus:ring-transparent sm:text-sm"
                 />
-
                 <button className="mt-1 w-full bg-primary px-6 py-3 text-sm font-bold rounded-e-xl uppercase tracking-wide text-white transition duration-300 hover:opacity-85 sm:mt-0 sm:w-auto sm:shrink-0">
                   <Search />
                 </button>
@@ -71,18 +70,18 @@ export default function Header() {
               <div className="flex items-center gap-10">
                 <Popover>
                   <PopoverTrigger asChild>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 cursor-pointer">
                       <ShoppingCart />
                       <label
                         htmlFor=""
                         className="bg-slate-200 rounded-full py-1 px-2"
                       >
-                        {itemsCount}
+                        {itemCount || 0}
                       </label>
                     </div>
                   </PopoverTrigger>
-                  <PopoverContent className='bg-white outline-none'>
-                    <Cart cart={cart}/>
+                  <PopoverContent className="bg-white outline-none">
+                    <Cart cart={cart} />
                   </PopoverContent>
                 </Popover>
 

@@ -4,6 +4,7 @@
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 export default function Cart({ cart }) {
   //
@@ -11,17 +12,32 @@ export default function Cart({ cart }) {
   console.log(userCarts);
 
   return (
-    <div className="">
-        <h3 className="">
-        {/* {cart[0].res} */}
-        </h3>
-    <div className="">
-        {/* {cart&&userCarts?.map((item, index) =>
-            <div key={index} className="">
-                <Image src={item?.image?.url} alt={item?.name} width={100} height={100} />
+    <div className="p-3 w-[20vw] space-y-5">
+      <h3 className=" text-2xl font-bold">Cart Items</h3>
+      <div className="flex flex-col gap-2 overflow-y-auto h-[60vh] ">
+        {cart &&
+          userCarts?.userCarts?.map((item, index) => (
+            <div key={index} className="flex gap-2">
+              <Image
+                src={item?.productImage}
+                alt={item?.productName}
+                width={100}
+                height={100}
+                className="w-14 h-14 object-cover rounded-lg"
+              />
+              <div className="">
+                <p className="">{item?.productName}</p>
+                <p className="text-sm">
+                  <span className="font-bold text-lg text-primary">
+                  {item?.price}
+                  </span>{" "} 
+                  SAR
+                </p>
+              </div>
             </div>
-        )} */}
-    </div>
+          ))}
+      </div>
+      <Button className="w-full text-white outline-none">Checkout</Button>
     </div>
     // <div className="flex items-center space-x-4 ">
     //   <Skeleton className="h-12 w-12 rounded-full bg-gray-200" />
