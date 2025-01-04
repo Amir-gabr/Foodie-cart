@@ -12,9 +12,11 @@ import { addToCart } from "./../../../redux/addToCartSlice";
 import Image from "next/image";
 
 export default function MenuSection({ resDetails }) {
-  const {user}=useUser()
+  const { user } = useUser();
   const dispatch = useDispatch();
+  const resSlug = resDetails?.slug;
   const [result, setResult] = useState([]);
+  // console.log(resName.slug);
 
   // Set the default value of result to the first category's menu items
   useEffect(() => {
@@ -23,13 +25,14 @@ export default function MenuSection({ resDetails }) {
       menuItemsFilter(firstCategory); // Initialize with the first category
     }
   }, [resDetails]);
-
-  const handleAddToCart=(item)=> {
-    const email = user?.primaryEmailAddress?.emailAddress || '';
-    const productImage = item?.image?.url || '';
-    const productName = item?.name || '';
-    const productDescription = item?.description || '';
+  
+  const handleAddToCart = (item) => {
+    const email = user?.primaryEmailAddress?.emailAddress || "";
+    const productImage = item?.image?.url || "";
+    const productName = item?.name || "";
+    const productDescription = item?.description || "";
     const price = item?.price || 0;
+    const resName = resSlug || "";
     dispatch(
       addToCart({
         email: email,
@@ -37,13 +40,15 @@ export default function MenuSection({ resDetails }) {
         description: productDescription,
         price: price,
         image: productImage,
+        resName,
       })
     );
-  }
-
+  };
+  
+  // toast 
   const handleToast = (itemName) => {
     toast.success(itemName);
-  }
+  };
   // Filter the menu items based on the category
   function menuItemsFilter(category) {
     const filteredResult = resDetails?.menu?.find(
@@ -91,7 +96,7 @@ export default function MenuSection({ resDetails }) {
                 <SquarePlus
                   className="cursor-pointer hover:scale-110"
                   onClick={() => {
-                    handleAddToCart(item)
+                    handleAddToCart(item);
                     handleToast(item?.name);
                   }}
                 />

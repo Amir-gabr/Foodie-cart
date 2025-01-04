@@ -10,22 +10,24 @@ export const addToCart = createAsyncThunk("cart/getAddToCart", async (data) => {
 
   // Define the GraphQL query
   const query = gql`
-    mutation AddToCart {
-      createUserCart(
-        data: {
-          email: "${data?.email}",
-          price: ${data?.price},
-          productDescription: "${data?.description}",
-          productImage: "${data?.image}",
-          productName: "${data?.name}",
-        }
-      ) {
-        id
-      }
-      publishManyUserCarts(to: PUBLISHED) {
-        count
-      }
+  mutation AddToCart {
+  createUserCart(
+    data: {
+      email: "${data?.email}",
+      price: ${data?.price},
+      productDescription: "${data?.description}",
+      productImage: "${data?.image}",
+      productName: "${data?.name}",
+      restaurant: {connect: {slug: "${data?.resName}"}}
     }
+  )
+  {
+    id
+  }
+  publishManyUserCarts(to: PUBLISHED) {
+    count
+  }
+}
   `;
 
   try {
@@ -56,7 +58,6 @@ const cartSlice = createSlice({
       .addCase(addToCart.fulfilled, (state, action) => {
         state.isLoading = false;
         state.cart = action.payload;
-        console.log(state.cart);
       })
       .addCase(addToCart.pending, (state) => {
         state.isLoading = true;

@@ -3,6 +3,7 @@
 "use client";
 //
 //
+import Cart from './Cart';
 import Link from "next/link";
 import Image from "next/image";
 import React, { useEffect } from "react";
@@ -10,19 +11,23 @@ import { addToCart } from "../redux/addToCartSlice";
 import { Search, ShoppingCart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../src/components/ui/button";
+import { getUserCartData } from '../redux/userCartSlice';
+import {Popover,PopoverContent,PopoverTrigger} from "@/components/ui/popover"
 import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
-import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 export default function Header() {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state?.cart?.cart);
-  const itemsCount = cart?.publishManyUserCarts?.count
-  console.log(itemsCount);
-  
   const { isSignedIn } = useUser();
-  
+  //----------------//
+  const cart = useSelector((state) => state);
+  //---//
+  const  itemsCount= cart?.userCart?.cart?.publishManyUserCarts?.count
+  console.log(itemsCount);
+  //----------------//
   useEffect(() => {
+    dispatch(getUserCartData());
     dispatch(addToCart());
-  },[dispatch])
+  }, [dispatch])
+  //----------------//
   const userButtonAppearance = {
     elements: {
       userButtonAvatarBox: "w-12 h-12",
@@ -64,15 +69,23 @@ export default function Header() {
           <div className="flex items-center gap-4">
             {isSignedIn ? (
               <div className="flex items-center gap-10">
-                <Sheet>
-                  
-                <SheetTrigger>
-                  <div className="flex items-center gap-2">
-                    <ShoppingCart />
-                    <label htmlFor="" className="bg-slate-200 rounded-full py-1 px-2">{itemsCount}</label>
-                  </div>
-                </SheetTrigger>
-                  </Sheet>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <div className="flex items-center gap-2">
+                      <ShoppingCart />
+                      <label
+                        htmlFor=""
+                        className="bg-slate-200 rounded-full py-1 px-2"
+                      >
+                        {itemsCount}
+                      </label>
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className='bg-white outline-none'>
+                    <Cart cart={cart}/>
+                  </PopoverContent>
+                </Popover>
+
                 <UserButton
                   afterSignOutUrl="/"
                   appearance={userButtonAppearance}

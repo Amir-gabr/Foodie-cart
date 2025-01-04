@@ -8,8 +8,6 @@ import {
 } from "../../../../src/components/ui/tabs";
 
 export default function MenuTabs({resDetails}) {
-
-console.log(resDetails);
   return (
     <Tabs className="flex flex-col" defaultValue="tab1">
       <TabsList className="flex items-center justify-between rounded-md bg-gray-200 p-2">
