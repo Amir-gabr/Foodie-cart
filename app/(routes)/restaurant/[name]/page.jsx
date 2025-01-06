@@ -10,6 +10,7 @@ import ResTabs from "../_components/ResTabs";
 import { usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { getResDetailsData } from "../../../redux/resDetailsSlice";
+import { addToCart } from "../../../redux/addToCartSlice";
 
 export default function ResDetails() {
   const param = usePathname();
@@ -17,7 +18,6 @@ export default function ResDetails() {
   const dispatch = useDispatch();
   //
   const { resDetails, isLoading } = useSelector((state) => state?.resDetails);
-
   // console.log(resDetails);
   //
   useEffect(() => {

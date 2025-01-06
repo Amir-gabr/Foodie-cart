@@ -2,31 +2,38 @@
 //
 "use client";
 //
-//
-import Cart from './Cart';
+import Cart from "./Cart";
 import Link from "next/link";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useState ,useEffect, useContext } from "react";
 import { Search, ShoppingCart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../src/components/ui/button";
-import { getUserCartData } from '../redux/userCartSlice';
-import {Popover,PopoverContent,PopoverTrigger} from "@/components/ui/popover"
+import { getUserCartData } from "../redux/cartDataSlice";
+import { CartUpdateContext } from "../_context/CartUpdateContext";
 import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
+import { Popover , PopoverContent , PopoverTrigger} from "@/components/ui/popover";
+
+
+
 export default function Header() {
   const dispatch = useDispatch();
-  const { isSignedIn } = useUser();
-
+  const { isSignedIn ,user } = useUser();
   //----------------//
   const cart = useSelector((state) => state);
-  const cartCount = useSelector((state) => state?.cart?.cartData?.userCarts);
+  const itemCount = cart?.cartData?.userCarts?.userCarts;
+  //----------------//
+  const { updateCart } = useContext(CartUpdateContext);
+  const [cartItems, setCartItems] = useState([]);
   
-  //---//
-  const itemCount =  cartCount?.length;
+  const updateCartItems = () => {
+    user && dispatch(getUserCartData(user?.primaryEmailAddress?.emailAddress));
+    setCartItems(itemCount);
+  }
   //----------------//
   useEffect(() => {
-    dispatch(getUserCartData());
-  }, [dispatch])
+    updateCartItems()
+  }, [dispatch, updateCart]);
   //----------------//
   const userButtonAppearance = {
     elements: {
@@ -35,13 +42,12 @@ export default function Header() {
       userButtonPopoverActionButton: "text-primary",
     },
   };
-
   return (
     <header className="bg-white border-b py-2">
       <div className="container">
         <div className="flex h-16 items-center justify-between gap-24">
           <div className="md:flex md:items-center md:gap-12">
-            <Link href="/">
+            <Link href="/?category=all">
               <Image
                 className=""
                 src="/logo.png"
@@ -76,12 +82,12 @@ export default function Header() {
                         htmlFor=""
                         className="bg-slate-200 rounded-full py-1 px-2"
                       >
-                        {itemCount || 0}
+                        {cartItems?.length || 0}
                       </label>
                     </div>
                   </PopoverTrigger>
                   <PopoverContent className="bg-white outline-none">
-                    <Cart cart={cart} />
+                    <Cart cart={cartItems} />
                   </PopoverContent>
                 </Popover>
 

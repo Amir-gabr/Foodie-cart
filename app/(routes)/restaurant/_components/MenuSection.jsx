@@ -2,21 +2,24 @@
 //
 "use client";
 //
-import { toast } from "sonner"
+import Image from "next/image";
+import { toast } from "sonner";
 import { useUser } from "@clerk/nextjs";
 import { SquarePlus } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { addToCart } from "./../../../redux/addToCartSlice";
-import Image from "next/image";
+import { getUserCartData } from "../../../redux/cartDataSlice";
+import { CartUpdateContext } from "../../../_context/CartUpdateContext";
 
 export default function MenuSection({ resDetails }) {
   const { user } = useUser();
   const dispatch = useDispatch();
-  const resSlug = resDetails?.slug;
   const [result, setResult] = useState([]);
-  // console.log(resName.slug);
+  const{updateCart,setUpdateCart}=useContext(CartUpdateContext);
+  //----------------//
+  const resSlug = resDetails?.slug;
 
   // Set the default value of result to the first category's menu items
   useEffect(() => {
@@ -43,6 +46,8 @@ export default function MenuSection({ resDetails }) {
         resName,
       })
     );
+    // انا استعملت الطريقه دي علشان كل مره اعمل اضافه لمنتج يبعت الداتا للسيرفر ف يعرفها ان في عملية اضافه حدثة
+    setUpdateCart(!updateCart);
   };
   
   // toast 
