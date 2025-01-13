@@ -21,19 +21,31 @@ export default function Header() {
   const { isSignedIn ,user } = useUser();
   //----------------//
   const cart = useSelector((state) => state);
-  const itemCount = cart?.cartData?.userCarts?.userCarts;
+  const itemCount = cart?.cartData?.userCarts;
+  console.log(itemCount);
+  
   //----------------//
   const { updateCart } = useContext(CartUpdateContext);
   const [cartItems, setCartItems] = useState([]);
   
-  const updateCartItems = () => {
-    user && dispatch(getUserCartData(user?.primaryEmailAddress?.emailAddress));
-    setCartItems(itemCount);
-  }
-  //----------------//
   useEffect(() => {
-    updateCartItems()
-  }, [dispatch, updateCart]);
+    if (user) {
+      dispatch(getUserCartData(user.primaryEmailAddress.emailAddress));
+    }
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    if (itemCount) {
+      setCartItems(itemCount);
+    }
+  }, [itemCount]);
+  useEffect(() => {
+    if (updateCart) {
+      dispatch(getUserCartData(user?.primaryEmailAddress?.emailAddress)); 
+    }
+  }, [updateCart, dispatch, user]);
+    console.log("cartItems", cartItems);
+
   //----------------//
   const userButtonAppearance = {
     elements: {
@@ -82,12 +94,12 @@ export default function Header() {
                         htmlFor=""
                         className="bg-slate-200 rounded-full py-1 px-2"
                       >
-                        {cartItems?.length || 0}
+                        {itemCount?.length || 0}
                       </label>
                     </div>
                   </PopoverTrigger>
                   <PopoverContent className="bg-white outline-none">
-                    <Cart cart={cartItems} />
+                    <Cart cart={itemCount} />
                   </PopoverContent>
                 </Popover>
 

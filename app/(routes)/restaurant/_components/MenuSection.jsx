@@ -17,10 +17,11 @@ export default function MenuSection({ resDetails }) {
   const { user } = useUser();
   const dispatch = useDispatch();
   const [result, setResult] = useState([]);
-  const{updateCart,setUpdateCart}=useContext(CartUpdateContext);
   //----------------//
   const resSlug = resDetails?.slug;
-
+  //----------------//
+  
+  const{updateCart,setUpdateCart}=useContext(CartUpdateContext);
   // Set the default value of result to the first category's menu items
   useEffect(() => {
     if (resDetails && resDetails?.menu && resDetails?.menu?.length > 0) {
@@ -46,10 +47,13 @@ export default function MenuSection({ resDetails }) {
         resName,
       })
     );
+  };
+  //handle updated cart
+  function handleUpdateCart() {
     // انا استعملت الطريقه دي علشان كل مره اعمل اضافه لمنتج يبعت الداتا للسيرفر ف يعرفها ان في عملية اضافه حدثة
     setUpdateCart(!updateCart);
-  };
-  
+    // console.log(" yes updated");
+  }
   // toast 
   const handleToast = (itemName) => {
     toast.success(itemName);
@@ -103,6 +107,7 @@ export default function MenuSection({ resDetails }) {
                   onClick={() => {
                     handleAddToCart(item);
                     handleToast(item?.name);
+                    handleUpdateCart();
                   }}
                 />
               </div>

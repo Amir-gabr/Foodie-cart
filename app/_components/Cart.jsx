@@ -7,11 +7,13 @@ import { TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDispatch, useSelector } from "react-redux";
-import { removeItemFromCart } from './../redux/removeItemSlice';
-
+import {
+  disconnectRestaurant,
+  removeItemFromCart,
+} from "../redux/disconnect&removeItemSlice";
 
 export default function Cart({ cart }) {
-  console.log(cart)
+  console.log(cart);
   const dispatch = useDispatch();
   //
   // const data = useSelector((state) => state?.categories?.categories);
@@ -20,18 +22,21 @@ export default function Cart({ cart }) {
   // }, [dispatch]);
   //------------//
   const calcCoast = () => {
-    let coast = 0
-    cart?.forEach(item => {
-      coast += item.price
-    })
-    return coast
-  }
+    let coast = 0;
+    cart?.forEach((item) => {
+      coast += item.price;
+    });
+    return coast;
+  };
   //------------//
-  const handleRemoveItem =(id)=>{
+  const handleDisconnectRestaurant = (id) => {
+    dispatch(disconnectRestaurant(id));
+    console.log(id);
+  };
+  const handleRemoveItem = (id) => {
     dispatch(removeItemFromCart(id));
     console.log(id);
-    
-  }
+  };
   return (
     <div className="p-3 w-[30vw] md:w-[30vw] lg:w-[20vw] space-y-5">
       <h3 className=" text-2xl font-bold">Cart Items</h3>
@@ -59,7 +64,10 @@ export default function Cart({ cart }) {
               </div>
               <TrashIcon
                 className="cursor-pointer w-5 text-primary"
-                onClick={() => handleRemoveItem(item?.id)}
+                onClick={() => {
+                  handleDisconnectRestaurant(item?.id)
+                  handleRemoveItem(item?.id)
+                }}
               />
             </div>
           ))}

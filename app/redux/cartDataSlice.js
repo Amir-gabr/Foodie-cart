@@ -52,10 +52,10 @@ const userCartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserCartData.fulfilled, (state, action) => {
-        state.userCarts = action.payload;
+        state.userCarts = action.payload?.userCarts;
         state.isLoading = false;
         state.isError = null;
-        //   console.log(state.userCarts)
+          console.log("from redux",state.userCarts)
       })
       .addCase(getUserCartData.pending, (state, action) => {
         state.isLoading = true;

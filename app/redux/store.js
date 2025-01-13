@@ -8,7 +8,7 @@ import { restaurantsReducer } from "./restaurantsSlice";
 import { resDetailsReducer } from "./resDetailsSlice";
 import { cartReducer } from "./addToCartSlice";
 import { userCartReducer } from "./cartDataSlice";
-import { removeItemReducer } from "./removeItemSlice";
+import { removeItemReducer } from "./disconnect&removeItemSlice";
 
 export const store = configureStore({
   reducer: {
