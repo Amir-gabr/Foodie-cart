@@ -45,7 +45,7 @@ export default function Cart({ cart }) {
 
 
   return (
-    <div className="p-3 w-[30vw] md:w-[30vw] lg:w-[20vw] space-y-5">
+    <div className="p-3 w-[60vw] md:w-[30vw] lg:w-[20vw] space-y-5">
       <h3 className=" text-2xl font-bold">Cart Items</h3>
       <div className="flex flex-col gap-2 overflow-y-auto h-[60vh] ">
         {cart &&
