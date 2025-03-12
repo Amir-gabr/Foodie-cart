@@ -23,7 +23,7 @@ export default function ResTabs() {
 
   return (
     <Tabs className="flex flex-col" defaultValue="tab1">
-      <TabsList className="flex items-center justify-between w-[30vw] rounded-md bg-gray-200 p-[6px]">
+      <TabsList className="flex items-center justify-between w-[100%] rounded-md bg-gray-200 p-[6px]">
         <TabsTrigger
           className="flex h-[36px] w-[200px] flex-1 cursor-pointer items-center justify-center rounded-md data-[state=active]:bg-white px-5 text-[15px] "
           value="tab1"

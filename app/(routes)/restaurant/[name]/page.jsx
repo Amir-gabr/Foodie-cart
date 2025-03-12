@@ -43,14 +43,14 @@ export default function ResDetails() {
           >
             <path d="M9.049 2.927c.3-.916 1.603-.916 1.902 0l1.286 3.953a1.5 1.5 0 001.421 1.033h4.171c.949 0 1.341 1.154.577 1.715l-3.38 2.458a1.5 1.5 0 00-.54 1.659l1.286 3.953c.3.916-.757 1.67-1.539 1.145l-3.38-2.458a1.5 1.5 0 00-1.76 0l-3.38 2.458c-.782.525-1.838-.229-1.539-1.145l1.286-3.953a1.5 1.5 0 00-.54-1.659l-3.38-2.458c-.764-.561-.372-1.715.577-1.715h4.171a1.5 1.5 0 001.421-1.033l1.286-3.953z"></path>
           </svg>
-          <p className="text-gray-400 mt-2">4.5 (35k)</p>
+          <p className="text-gray-400 mt-2 md:text-base text-[12px]">4.5 (35k)</p>
         </div>
-        <p className="text-gray-500">
-          <Clock className="inline mr-2" />
+        <p className="text-gray-500 md:text-base text-[12px]">
+          <Clock className="inline mr-2 md:w-6 md:h-6 w-4 h-4" />
           {resDetails?.workingHours}
         </p>
-        <p className="text-gray-500">
-          <MapPinIcon className="inline mr-2" />
+        <p className="text-gray-500 md:text-base text-[12px]">
+          <MapPinIcon className="inline mr-2 md:w-6 md:h-6 w-4 h-4" />
           {resDetails?.address}
         </p>
       </div>

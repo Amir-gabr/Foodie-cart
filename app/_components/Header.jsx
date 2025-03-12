@@ -61,7 +61,7 @@ export default function Header() {
           <div className="md:flex md:items-center md:gap-12">
             <Link href="/?category=all">
               <Image
-                className="lg:w-32 lg:h-8 md:w-28 md:h-7 w-24 h-7"
+                className="lg:w-40 lg:h-12 md:w-36 md:h-10 w-32 h-8"
                 src="/logo.png"
                 alt="foodie cart logo"
                 width={160}
