@@ -8,7 +8,8 @@ import { restaurantsReducer } from "./restaurantsSlice";
 import { resDetailsReducer } from "./resDetailsSlice";
 import { cartReducer } from "./addToCartSlice";
 import { userCartReducer } from "./cartDataSlice";
-import { removeItemReducer } from "./disconnect&removeItemSlice";
+import { disconnectResReducer } from "./disconnectResSlice";
+import { removeItemReducer } from "./removeItemSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     resDetails: resDetailsReducer,
     userCart: cartReducer,
     cartData: userCartReducer,
-    removeItem: removeItemReducer,
+    disconnectedRes: disconnectResReducer,
+    removedItem: removeItemReducer,
   },
 });

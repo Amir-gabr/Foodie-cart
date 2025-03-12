@@ -22,7 +22,7 @@ export default function Header() {
   //----------------//
   const cart = useSelector((state) => state);
   const itemCount = cart?.cartData?.userCarts;
-  console.log(itemCount);
+  // console.log(itemCount);
   
   //----------------//
   const { updateCart } = useContext(CartUpdateContext);
@@ -44,7 +44,7 @@ export default function Header() {
       dispatch(getUserCartData(user?.primaryEmailAddress?.emailAddress)); 
     }
   }, [updateCart, dispatch, user]);
-    console.log("cartItems", cartItems);
+    // console.log("cartItems", cartItems);
 
   //----------------//
   const userButtonAppearance = {
@@ -57,11 +57,11 @@ export default function Header() {
   return (
     <header className="bg-white border-b py-2">
       <div className="container">
-        <div className="flex h-16 items-center justify-between gap-24">
+        <div className="flex md:h-16 h-12 items-center justify-between md:gap-24 gap:10">
           <div className="md:flex md:items-center md:gap-12">
             <Link href="/?category=all">
               <Image
-                className=""
+                className="lg:w-32 lg:h-8 md:w-28 md:h-7 w-24 h-7"
                 src="/logo.png"
                 alt="foodie cart logo"
                 width={160}
@@ -85,14 +85,14 @@ export default function Header() {
           </div>
           <div className="flex items-center gap-4">
             {isSignedIn ? (
-              <div className="flex items-center gap-10">
+              <div className="flex items-center md:gap-10 gap-5">
                 <Popover>
                   <PopoverTrigger asChild>
-                    <div className="flex items-center gap-2 cursor-pointer">
-                      <ShoppingCart />
+                    <div className="flex items-center md:gap-2 gap-1 cursor-pointer">
+                      <ShoppingCart className="md:w-6 md:h-6 w-5 h-5" />
                       <label
                         htmlFor=""
-                        className="bg-slate-200 rounded-full py-1 px-2"
+                        className="bg-slate-200 rounded-full py-1 px-2 md:text-base text-xs"
                       >
                         {itemCount?.length || 0}
                       </label>
@@ -102,47 +102,29 @@ export default function Header() {
                     <Cart cart={itemCount} />
                   </PopoverContent>
                 </Popover>
-
                 <UserButton
                   afterSignOutUrl="/"
                   appearance={userButtonAppearance}
                 />
+              
               </div>
             ) : (
               <div className="flex items-center gap-4">
                 <SignUpButton>
                   <Button
-                    className="rounded-md bg-white px-5 py-2.5 text-sm font-medium text-primary"
+                    className="rounded-md bg-white lg:px-5 lg:py-2.5 md:px-3 md:py-1.5 px-2 py-1 md:text-sm text-xs font-medium text-primary"
                     variant="outline"
                   >
                     Sign Up
                   </Button>
                 </SignUpButton>
                 <SignInButton mode="modal">
-                  <Button className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-white shadow">
+                  <Button className="rounded-md bg-primary lg:px-5 lg:py-2.5 md:px-3 md:py-1.5 px-2 py-1 text-sm font-medium text-white shadow">
                     Sign In
                   </Button>
                 </SignInButton>
               </div>
             )}
-            <div className="block md:hidden">
-              <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="size-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              </button>
-            </div>
           </div>
         </div>
       </div>

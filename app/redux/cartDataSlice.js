@@ -13,7 +13,7 @@ export const getUserCartData = createAsyncThunk("cartData/getUserCartData", asyn
     //
     const query = gql`
       query GetUserCartData {
-        userCarts(where: { email: "${email}" }) {
+        userCarts(where: { email: "${email}" }, first: 50) {
           id
           productDescription
           productImage
@@ -55,7 +55,7 @@ const userCartSlice = createSlice({
         state.userCarts = action.payload?.userCarts;
         state.isLoading = false;
         state.isError = null;
-          console.log("from redux",state.userCarts)
+          // console.log("from redux",state.userCarts)
       })
       .addCase(getUserCartData.pending, (state, action) => {
         state.isLoading = true;

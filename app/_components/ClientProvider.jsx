@@ -13,7 +13,7 @@ import { CartUpdateContext } from "./../_context/CartUpdateContext";
 export default function ClientProvider({ children }) {
   const [updateCart, setUpdateCart] = useState(false);
   return (
-    <>
+    <div className="md:px-0 px-3">
       <Provider store={store}>
         <CartUpdateContext.Provider value={{ updateCart, setUpdateCart }}>
           <Header />
@@ -21,6 +21,6 @@ export default function ClientProvider({ children }) {
           <Footer />
         </CartUpdateContext.Provider>
       </Provider>
-    </>
+    </div>
   );
 }

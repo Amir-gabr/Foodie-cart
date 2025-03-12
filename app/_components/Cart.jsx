@@ -2,24 +2,23 @@
 //
 //
 import Image from "next/image";
-import { useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
 import { TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  disconnectRestaurant,
-  removeItemFromCart,
-} from "../redux/disconnect&removeItemSlice";
+import { getDisconnectRes } from "../redux/disconnectResSlice";
+import { getRemovedItem } from "../redux/removeItemSlice";
 
 export default function Cart({ cart }) {
-  console.log(cart);
   const dispatch = useDispatch();
-  //
-  // const data = useSelector((state) => state?.categories?.categories);
-  // //
-  // useEffect(() => {
-  // }, [dispatch]);
+  const { getToken } = useAuth();
+  const disconnectedData = useSelector(
+    (state) => state?.disconnectedRes?.disconnectRes
+  );
+  console.log("disconnectedData", disconnectedData);
+  const removedData = useSelector((state) => state?.removedItem?.removeItem);
+  console.log("removedData", removedData);
   //------------//
   const calcCoast = () => {
     let coast = 0;
@@ -29,14 +28,22 @@ export default function Cart({ cart }) {
     return coast;
   };
   //------------//
-  const handleDisconnectRestaurant = (id) => {
-    dispatch(disconnectRestaurant(id));
-    console.log(id);
+  const handleDisconnectRes = (id) => {
+    dispatch(getDisconnectRes(id));
   };
-  const handleRemoveItem = (id) => {
-    dispatch(removeItemFromCart(id));
-    console.log(id);
+  const handleDeleteCartItem = (id) => {
+    dispatch(getRemovedItem(id));
   };
+ 
+  
+  
+
+
+
+
+
+
+
   return (
     <div className="p-3 w-[30vw] md:w-[30vw] lg:w-[20vw] space-y-5">
       <h3 className=" text-2xl font-bold">Cart Items</h3>
@@ -65,8 +72,8 @@ export default function Cart({ cart }) {
               <TrashIcon
                 className="cursor-pointer w-5 text-primary"
                 onClick={() => {
-                  handleDisconnectRestaurant(item?.id)
-                  handleRemoveItem(item?.id)
+                  handleDisconnectRes(item?.id);
+                  handleDeleteCartItem(item?.id);
                 }}
               />
             </div>
@@ -86,3 +93,23 @@ export default function Cart({ cart }) {
     // </div>
   );
 }
+
+
+
+
+
+// const handleDisconnectRestaurant = async (id) => {
+//   try {
+//     const token = await getToken(); //      
+//     const data = {
+//       id: id,
+//       token: token, //   
+//     }
+//   } catch (error) {
+//     console.error("Error disconnecting restaurant:", error);
+//   }
+//   dispatch(getDisconnectRes(data)); //
+//   // dispatch(getRemovedItem(data)); // 
+
+//   DeleteItemFromCart(id).then((res)=>console.log("res",res))
+// };

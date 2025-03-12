@@ -27,7 +27,7 @@ export default function Restaurants() {
   return (
     <section>
       <div className="py-10">
-        <p className="text-gray-700 text-xl  md:text-2xl border-b-2 border-primary w-fit py-2 pe-6">
+        <p className="text-gray-700 lg:text-xl md:text-lg text-sm  md:text-2xl border-b-2 border-primary w-fit py-2 pe-6">
           Popular{" "}
           <span className="text-primary font-semibold capitalize">
             {category}
