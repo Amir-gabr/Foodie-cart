@@ -77,7 +77,7 @@ export default function Header() {
                   placeholder="Type to search"
                   className="w-full border-none focus:outline-none focus:ring-transparent sm:text-sm"
                 />
-                <button className="mt-1 w-full bg-primary px-6 py-3 text-sm font-bold rounded-e-xl uppercase tracking-wide text-white transition duration-300 hover:opacity-85 sm:mt-0 sm:w-auto sm:shrink-0">
+                <button className="mt-1  w-full bg-primary px-6 py-3 text-sm font-bold rounded-e-xl uppercase tracking-wide text-white transition duration-300 hover:opacity-85 sm:mt-0 sm:w-auto sm:shrink-0">
                   <Search />
                 </button>
               </div>
